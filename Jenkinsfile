@@ -36,7 +36,6 @@ stages{
         parallel {
             stage('testA')
             {
-                agent { label 'DevServer' }
                 steps{
                     echo " This is test A"
                     sh "mvn test"
@@ -45,7 +44,6 @@ stages{
             }
             stage('testB')
             {
-                agent { label 'DevServer' }
                 steps{
                 echo "this is test B"
                 sh "mvn test"
@@ -66,8 +64,7 @@ stages{
     stage('deploy_dev')
     {
       when { branch 'develop' 
-        beforeAgent true}
-        agent { label 'DevServer' }
+        }
         steps
         {
             dir("/var/www/html")
@@ -84,8 +81,7 @@ stages{
     stage('deploy_prod')
     {
       when { branch 'master'
-        beforeAgent true}
-        agent { label 'ProdServer' }
+       }
         steps
         {
              timeout(time:5, unit:'DAYS'){
